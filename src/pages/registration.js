@@ -4,34 +4,36 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ComponentsHeader } from '../components/header';
 import { LogIn } from './login';
+import { Link } from 'react-router-dom'
+import { uiLink } from '../shared/Links';
 
 export function Registration() {
-const [FIO, setFIO] = useState(' ');
 
-    return (
-      <div className="Registration">
-        <MainRegistration> 
-          <Container>
-            <WindowRegistration>
-              <WrapperRegistration> 
-                <RegistrationText>Регистрация</RegistrationText>
-                <LinkToLogIn href='/login'>Вход</LinkToLogIn>
-              </WrapperRegistration>
-              <BlockRegistrationInputs>
-                <InputFIO placeholder='ФИО'
-                type={'text'} onChange={(event) => setFIO(event.target.value)}></InputFIO>
-                <InputJobTitle placeholder='должность'></InputJobTitle>
-                <InputLogin placeholder='login'></InputLogin>
-                <InputPassword placeholder='пароль'></InputPassword>
-                <InputRepeatPassword placeholder='пароль еще раз'></InputRepeatPassword>
-              </BlockRegistrationInputs>
-              <RegistrationButton>Регистрация</RegistrationButton>
-            </WindowRegistration>
-          </Container>
-        </MainRegistration>
-      </div>
-    );
-  };
+
+  return (
+    <div className="Registration">
+      <MainRegistration>
+        <Container>
+          <WindowRegistration>
+            <WrapperRegistration>
+              <RegistrationText>Регистрация</RegistrationText>
+              <LinkToLogIn to='/login'>Вход</LinkToLogIn>
+            </WrapperRegistration>
+            <BlockRegistrationInputs>
+              <InputFIO placeholder='ФИО'
+                type={'text'}></InputFIO>
+              <InputJobTitle placeholder='должность'></InputJobTitle>
+              <InputLogin placeholder='login'></InputLogin>
+              <InputPassword placeholder='пароль'></InputPassword>
+              <InputRepeatPassword placeholder='пароль еще раз'></InputRepeatPassword>
+            </BlockRegistrationInputs>
+            <RegistrationButton>Регистрация</RegistrationButton>
+          </WindowRegistration>
+        </Container>
+      </MainRegistration>
+    </div>
+  );
+};
 
 const RegistrationText = styled.h1`
 font: 400 16px / 100% Inter;
@@ -63,7 +65,7 @@ height: 692px;
 background: #FFFFFF;
 `;
 
-const LinkToLogIn = styled.a`
+const LinkToLogIn = styled(Link)`
 text-decoration: none; 
 hover {text-decoration: underline;};
 font-size: 20px;
@@ -117,7 +119,7 @@ border: 2px solid;
 border-color: #F5F5F5;
 font-size: 16px;
 font-weight: 500;
-`; 
+`;
 
 const InputPassword = styled.input`
 height: 54px;

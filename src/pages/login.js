@@ -1,25 +1,46 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { fetchAuth } from '../redux/slices/auth';
+import { useForm } from 'react-hook-form';
+import { uiLink } from '../shared/Links';
 
-export function LogIn() {
+export const LogIn = () => {
+    const dispatch = useDispatch();
+    const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+        mode: 'onChange',
+    });
+
+    const onSubmit = (values) => {
+        dispatch(fetchAuth(values));
+        console.log(values);
+    };
+
     return (
-    <div className="LogIn">
-    <MainLogIn>
-            <Container> 
-                <WindowLogIn>
-                    <WrapperLogIn>
-                        <LogInText>Вход</LogInText>
-                        <LinkToReg href='/registration'>Регистрация</LinkToReg>
-                    </WrapperLogIn>
-                    <BlockInputs>
-                        <InputLogin placeholder='login'></InputLogin>
-                        <InputPassword placeholder='пароль'></InputPassword>
-                    </BlockInputs>
-                    <LogInButton>Войти</LogInButton>
-                </WindowLogIn>
-            </Container>
-        </MainLogIn>
-    </div>
+        <div className="LogIn">
+            <MainLogIn>
+                <Container>
+                    <WindowLogIn>
+                        <WrapperLogIn>
+                            <LogInText>Вход</LogInText>
+                            <LinkToReg to='/registration'>Регистрация</LinkToReg>
+                        </WrapperLogIn>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <BlockInputs>
+                                <InputLogin placeholder='login' {...register('email', { required: 'Укажите почту' })} type='email'></InputLogin>
+                                <InputPassword placeholder='пароль' {...register('password', { required: 'Укажите пароль' })}></InputPassword>
+                            </BlockInputs>
+                            <LogInButton type='submit'>Войти</LogInButton>
+                        </form>
+                    </WindowLogIn>
+                </Container>
+            </MainLogIn>
+        </div>
     );
 }
 
@@ -64,7 +85,7 @@ padding-left: 24px;
 padding-right: 21px;
 `;
 
-const LinkToReg = styled.a`
+const LinkToReg = styled(Link)`
 font-size: 20px;
 /* font: 400 16px / 100% Inter; */
 color: #7AAFFF;
